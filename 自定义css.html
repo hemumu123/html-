@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			#main {
+				height: 200px;
+				width: 200px;
+				user-select: none;
+				text-align: center;
+				color: white;
+				background-color: orange;
+				border-radius: 10px;
+				z-index: -1;
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				transform: translate(-50%, -50%);
+				transition: all .5s ease-in-out;
+			}
+			.con{
+				border: #000000 dashed 2px;
+				border-radius: 10px;
+				padding: 15px;
+				width: 200px;
+			}
+			input[type='text'] {
+				border: #000000 solid 1px;
+				border-radius: 4px;
+				outline: none;
+				padding: 2px;
+				margin: 1px 0;
+			}
+
+			#wid,
+			#hei {
+				width: 140px;
+			}
+
+			#textsize {
+				width: 95px;
+			}
+
+			#textcolor,
+			#backgod {
+				width: 112px;
+			}
+
+			button {
+				width: 75px;
+				height: 30px;
+				margin: 10px;
+				border-radius: 7px;
+				outline: none;
+			}
+		</style>
+		<script>
+			function onkeydown() { 
+			        if(event.keyCode == 13) { 
+			            // document.getElementById("enter").click(); 
+			            // return false; 
+						alert("123");
+			        } 
+			    } 
+			var btn;
+			var cgcolor = 0;
+			var wid;
+			var hei;
+			var textcolor;
+			var backgod;
+			var txtsize;
+			function find(){
+				btn = document.getElementById('main');
+				wid = document.getElementById('wid').value;
+				hei = document.getElementById('hei').value;
+				txtsize = document.getElementById('textsize').value;
+				backgod = document.getElementById('backgod').value;
+				textcolor = document.getElementById('textcolor').value;
+			}
+			function colordown(){
+				find();
+				btn.style.height = hei+'px';
+				btn.style.width = wid+'px';
+				btn.style.fontSize = txtsize+'px';
+				btn.style.background = backgod;
+				btn.style.color = textcolor;
+				console.info(txtsize);
+			}
+			function colorup(){
+				find();
+				btn.style.height = '200px';
+				btn.style.width = '200px';
+				btn.style.fontSize = '16px';
+				btn.style.background = 'orange'
+				btn.style.color = 'white';
+			}
+			function background(){
+				find();
+				if(cgcolor == 5){
+					cgcolor = 0;
+				}
+				if(cgcolor == 0){
+					btn.style.background = 'gray';
+				}if(cgcolor == 1){
+					btn.style.background = '#7F0000';
+				}if(cgcolor == 2){
+					btn.style.background = 'green';
+				}if(cgcolor == 3){
+					btn.style.background = 'blue';
+				}if(cgcolor == 4){
+					btn.style.background = 'orange';
+				}
+				cgcolor++;
+			}
+		</script>
+	</head>
+	<body>
+		<div class="con">
+			宽：<input type="text" id="wid" />px<br>
+			高：<input type="text" id="hei" />px<br>
+			字体大小：<input type="text" id="textsize" />px<br>
+			字体颜色：<input type="text" id="textcolor" /><br>
+			背景颜色：<input type="text" id="backgod" /><br>
+			<button type="button" id="btn1" onclick="colordown()">变化</button>
+			<button type="button" id="btn2" onclick="colorup()">还原</button>
+		</div>
+			<div id="main" onclick="background()">
+				点击变颜色<br>
+				变化顺序：<br>
+				灰色→酒红色<br>
+				↗&emsp;&emsp;&emsp;&emsp;↘<br>
+				橙色←蓝色←绿色
+			</div>
+	</body>
+</html>

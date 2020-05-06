@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			.main {
+				user-select: none;
+				width: 400px;
+				height: 200px;
+				padding: 10px;
+				background-color: #006699;
+				font-size: 20px;
+				color: white;
+				white-space: nowrap;
+			}
+		</style>
+		<script type="text/javascript">
+			var op = 0;		//渐显值
+			var hei = 0;	//高度值
+			var wid = 0;	//宽度值
+			var oobb = 1;	//渐隐值
+
+			window.onload = function() {
+				//网页全部加载完成后执行的操作
+				//每三秒后执行 a 
+				setInterval(a, 3000);
+			}
+			
+			var a = function() {
+				var interval = setInterval(function() {
+					//获取class=“main”的div
+					var fbox = document.getElementById("main");
+					op += 0.01;
+					hei += 2;
+					wid += 4;
+					//使用js给class=“main”的div设置style属性
+					fbox.style.opacity = op;
+					fbox.style.height = hei + 'px';
+					fbox.style.width = wid + 'px';
+					if (op > 1) {
+						//值复位
+						op = 0;
+						hei = 0;
+						wid = 0;
+						//结束interval循环
+						clearInterval(interval);
+					}
+				}, 10);
+				//消失动画，延迟1.5s
+				setTimeout(function(){
+					var stv = setInterval(function(){
+						var mainoobb = document.getElementById("main");
+						oobb -= 0.01;
+						mainoobb.style.opacity = oobb;
+						if(oobb <= 0){
+							oobb = 1;
+							clearInterval(stv);
+						}
+						console.info(oobb,"---渐隐值");
+					},10);
+				},1500);
+				
+			}
+		</script>
+	</head>
+	<body>
+		<div class="main" id="main">
+			首次动画页面加载完成三秒后出现<br>
+			出现动画动画一秒<br>
+			展示一秒<br>
+			消失动画一秒<br>
+			三秒重复一次（包含动画时间）
+		</div>
+	</body>
+</html>

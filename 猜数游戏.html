@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>猜数游戏</title>
+		<style type="text/css">
+			body {
+				background-color: #5888B8;
+			}
+
+			.main {
+				width: 270px;
+				/* height: 230px; */
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				transform: translate(-50%, -50%);
+				line-height: 50px;
+				padding: 30px;
+				background-color: rgba(255, 255, 255, 0.6);
+				border-radius: 20px;
+				font-size: 20px;
+			}
+
+			button {
+				user-select: none;
+				width: 70px;
+				height: 30px;
+				border-radius: 7px;
+				outline: none;
+			}
+
+			.renew {
+				float: right;
+				margin: 10px 10px 0 0;
+			}
+
+			#number {
+				display: block;
+				height: 100px;
+				width: 100px;
+				margin-left: 100px;
+				margin-top: 10px;
+				margin-bottom: -20px;
+				font-size: 100px;
+			}
+
+			#digital {
+				border-radius: 6px;
+				outline: none;
+				padding: 3px;
+				width: 90px;
+				margin-left: 50px;
+				text-align: center;
+			}
+
+			#digital:focus-within {
+				border: rgba(150, 150, 150, 0.2) solid 2px;
+				box-shadow: 0 0 6px black;
+			}
+
+			#ex {
+				margin-left: 30px;
+				color: green;
+			}
+
+			.lsjl {
+				width: 100px;
+				float: right;
+			}
+		</style>
+		<script type="text/javascript">
+			var numb, nnumb, ccs = 0,
+				ls = "";
+			window.onload = function renew() {
+				numb = document.getElementById('number');
+				random();
+			}
+			//刷新
+			function renew() {
+				random();
+				document.getElementById('digital').value = "";
+				document.getElementById('cs').innerHTML = 0;
+				document.getElementById('ex').innerHTML = "&emsp;&emsp;";
+				numb.style.margin = "10px 0 -20px 100px";
+				ccs = 0;
+				ls += "<br>";
+			}
+			//随机数
+			function random() {
+				nnumb = Math.floor(Math.random() * (99 - 1)) + 1;
+				numb.innerHTML = "?";
+
+				console.info(nnumb);
+			}
+			//确定按钮
+			function ok() {
+				var a = document.getElementById('digital').value;
+				var b = document.getElementById("ex");
+				if (a >= 0 && a <= 100) {
+					ccs++;
+					if (a == nnumb) {
+						numb.innerHTML = nnumb;
+						b.innerHTML = "正确";
+						b.style.color = "green";
+						if (numb.innerHTML < 10) {
+							numb.style.margin = "10px 0 -20px 100px";
+						} else {
+							numb.style.margin = "10px 0 -20px 70px";
+						}
+						ls += a + '<br>猜对次数：' + ccs + '<br>';
+						renewls();
+					}
+					if (a > nnumb) {
+						b.innerHTML = "大了";
+						b.style.color = "red";
+						ls += a + ',';
+						renewls();
+					}
+					if (a < nnumb) {
+						b.innerHTML = "小了";
+						b.style.color = "red";
+						ls += a + ',';
+						renewls();
+					}
+				} else {
+					alert('请输入0~100的数字');
+					document.getElementById('digital').value = null;
+				}
+				document.getElementById("cs").innerHTML = ccs;
+				// console.info(ls);
+			}
+			//历史记录
+			var lsbool = false;
+			function renewls(){
+				if(lsbool==true){
+					document.getElementById('lsjl').innerHTML = ls;
+				}
+			}
+			function lsjl() {
+				if (lsbool == true) {
+					lsbool = false;
+					document.getElementById('lsjl').innerHTML = "";
+					document.getElementById('lsbtn').innerHTML = "展开历史记录";
+				} else {
+					lsbool = true;
+					document.getElementById('lsjl').innerHTML = ls;
+					document.getElementById('lsbtn').innerHTML = "收起历史记录";
+				}
+			}
+			//回车事件
+			document.onkeyup = function(e) {
+				if (window.event) //如果window.event对象存在，就以此事件对象为准
+					e = window.event;
+				var code = e.charCode || e.keyCode;
+				if (code == 13) {
+					//此处编写用户敲回车后的代码
+					ok();
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<div class="main">
+			随机数：
+			<button type="button" onclick="renew()" class="renew">刷新</button><br>
+			<label id="number">?</label>
+			<label id="ex">&emsp;&emsp;</label>&emsp;
+			次数：<label id="cs">0</label><br>
+			<input type="text" id="digital" autofocus="autofocus" />
+			<button type="button" onclick="ok()" class="ok">确定</button><br>
+			<button type="button" id="lsbtn" class="lsjl" onclick="lsjl()">展开历史记录</button>
+			<div id="lsjl" style="clear: both; overflow: auto;line-height: 20px;"></div>
+		</div>
+		<footer style="width: 100%;position: fixed;bottom: 10px;text-align: center;color: gray;">By Xian</footer>
+	</body>
+</html>
